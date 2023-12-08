@@ -8,10 +8,10 @@ from tqdm import tqdm
 from modeling.unet import Unet
 from modeling.dinknet import DinkNet34
 from modeling.Segformer import Segformer
-from modeling.DBRANet import DBRANet_4
-from modeling.HCTNet import HCTNet
+from modeling.DBRANet import DBRANet_8
 from modeling.MAResUnet import MAResUNet
 from modeling.NLLinkNet import NL34_LinkNet
+from CFRNet import CFRNet
 
 os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 
@@ -36,11 +36,11 @@ def save_image(tensor, filename, nrow=8, padding=2, normalize=False, range=None,
 
 def main():
     parser = argparse.ArgumentParser(description="PyTorch Training")
-    parser.add_argument('--out-path', type=str, default='./run/CHN6/',
+    parser.add_argument('--out-path', type=str, default='./run/DeepGlobe/',
                         help='mask image to save')
     parser.add_argument('--batch-size', type=int, default=1,
                         metavar='N', help='input batch size for test ')
-    parser.add_argument('--ckpt', type=str, default='./run/CHN6/DinkNet34/model_best.pth.tar',
+    parser.add_argument('--ckpt', type=str, default='./run/DeepGlobe/NL34_LinkNet/model_best.pth.tar',
                         help='saved model')
     parser.add_argument('--out-stride', type=int, default=8,
                         help='network output stride (default: 8)')
@@ -54,7 +54,7 @@ def main():
     parser.add_argument('--gpu-ids', type=str, default='0',
                         help='use which gpu to train, must be a \
                         comma-separated list of integers only (default=0)')
-    parser.add_argument('--dataset', type=str, default='CHN6',
+    parser.add_argument('--dataset', type=str, default='DeepGlobe',
                         choices=['DeepGlobe', 'IRDS', 'CHN6'],
                         help='dataset name')
     parser.add_argument('--image-size', type=int, default=512,
@@ -75,13 +75,13 @@ def main():
     kwargs = {'num_workers': args.workers, 'pin_memory': False}
     train_loader, val_loader, test_loader, nclass = make_data_loader(args, **kwargs)
 
-    # model = HCTNet(image_size=(args.image_size, args.image_size))
-    model = DinkNet34()
+    # model = CFRNet(image_size=(args.image_size, args.image_size))
+    model = NL34_LinkNet()
     model = model.cuda()
     ckpt = torch.load(args.ckpt)
     model.load_state_dict(ckpt['state_dict'])
 
-    out_path = os.path.join(args.out_path, 'Output', 'DinkNet34/')
+    out_path = os.path.join(args.out_path, 'Output', 'NL34_LinkNet/')
     if not os.path.exists(out_path):
         os.makedirs(out_path)
 
