@@ -17,8 +17,8 @@ from modeling.unet import Unet
 from modeling.MAResUnet import MAResUNet
 from modeling.NLLinkNet import NL34_LinkNet
 from modeling.Segformer import Segformer
-from modeling.HCTNet import HCTNet
-from modeling.DBRANet import DBRANet_4
+from modeling.DBRANet import DBRANet_8
+from CFRNet import CFRNet
 
 
 os.environ['CUDA_VISIBLE_DEVICES'] = '0'
@@ -40,8 +40,8 @@ class Trainer(object):
         self.train_loader, self.val_loader, self.test_loader, self.nclass = make_data_loader(args, **kwargs)
 
         # Define network
-        # model = HCTNet(image_size=(args.image_size, args.image_size))
-        model = DinkNet34()
+        # model = CFRNet(image_size=(args.image_size, args.image_size))
+        model = NL34_LinkNet()
 
         # Define Optimizer
         optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
@@ -231,10 +231,10 @@ def main():
     parser = argparse.ArgumentParser(description="PyTorch Training")
     parser.add_argument('--out-stride', type=int, default=8,
                         help='network output stride (default: 8)')
-    parser.add_argument('--dataset', type=str, default='CHN6',
+    parser.add_argument('--dataset', type=str, default='DeepGlobe',
                         choices=['DeepGlobe', 'IRDS', 'CHN6'],
                         help='dataset name (default: DeepGlobe)')
-    parser.add_argument('--workers', type=int, default=4,
+    parser.add_argument('--workers', type=int, default=8,
                         metavar='N', help='dataloader threads')
     parser.add_argument('--image_size', type=int, default=512,
                         choices=[1024, 512, 256],
@@ -244,14 +244,14 @@ def main():
     parser.add_argument('--freeze-bn', type=bool, default=False,
                         help='whether to freeze bn parameters (default: False)')
     parser.add_argument('--loss-type', type=str, default='BCE_Dice',
-                        choices=['ce', 'con_ce', 'focal', 'BCE_Dice', 'Focal_Dice'],
+                        choices=['ce', 'con_ce', 'focal', 'BCE_Dice', 'Focal_Dice', 'PerceptualLoss'],
                         help='loss func type')
     # training hyper params
     parser.add_argument('--epochs', type=int, default=300, metavar='N',
                         help='number of epochs to train')
     parser.add_argument('--start_epoch', type=int, default=0,
                         metavar='N', help='start epochs (default:1)')
-    parser.add_argument('--batch-size', type=int, default=4,
+    parser.add_argument('--batch-size', type=int, default=8,
                         metavar='N', help='input batch size for \
                                 training (default: 8)')
     parser.add_argument('--use-balanced-weights', action='store_true', default=False,
@@ -259,10 +259,10 @@ def main():
     # optimizer params
     parser.add_argument('--lr', type=float, default=2e-4, metavar='LR',
                         choices=[5e-4, 3e-4, 2e-4],
-                        help='HCTNet:5e-4')
+                        help='CFRNet:5e-4')
     parser.add_argument('--lr-scheduler', type=str, default='loss_lr_1',
                         choices=['poly', 'step', 'cos', 'loss_lr_1', 'loss_lr_2'],
-                        help='HCTNet:loss_lr_2')
+                        help='CFRNet:loss_lr_2')
     parser.add_argument('--momentum', type=float, default=0.9,
                         metavar='M', help='momentum (default: 0.9)')
     parser.add_argument('--weight-decay', type=float, default=5e-4,
@@ -300,7 +300,7 @@ def main():
             raise ValueError('Argument --gpu_ids must bomma-separated list of integers only')
 
     if args.checkname is None:
-        args.checkname = 'DinkNet34'
+        args.checkname = 'NL34_LinkNet'
     print(args)
     torch.manual_seed(args.seed)
     trainer = Trainer(args)
