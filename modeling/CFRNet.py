@@ -187,7 +187,7 @@ class TAFF(nn.Module):
 
 class CFRNet(nn.Module):
     def __init__(self, in_chans=3, num_classes=1, image_size=(256, 256),
-                 depths=[3, 4, 6, 3], dims=[64, 128, 256, 512], stage_number=1):  # 96, 192, 384, 768
+                 depths=[3, 4, 6, 3], dims=[64, 128, 256, 512], stage_number=3):  # 96, 192, 384, 768
         super(CFRNet, self).__init__()
         self.stage_number = stage_number
 
