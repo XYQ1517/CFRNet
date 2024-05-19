@@ -10,5 +10,6 @@ In the fused feature map, we can clearly see the overall contour of the road.
 
 ## The Pseudo-code of CFRNet
 
-![image](https://github.com/XYQ1517/CFRNet/assets/104625070/8d757ef8-0918-428e-b7a9-faec99c492ad)
+![image](https://github.com/XYQ1517/CFRNet/assets/104625070/2c3a905a-3f2d-40c4-878c-6a9a1befdc74)
+
 
