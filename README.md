@@ -16,3 +16,17 @@ In the fused feature map, we can clearly see the overall contour of the road.
 
 The weight can be found here: https://pan.baidu.com/s/1G6L-JZhjMRHM0ftaWgrJXQ?pwd=ptmn
 Note that when testing the CFRNet weight on the DeepGlobe, you need to change all the "TAFF" in CFRNet.py to "MSAF".
+
+## Cite 
+
+@ARTICLE{10549925,
+  author={Xiong, Youqiang and Li, Lu and Yuan, Di and Wang, Haoqi and Ma, Tianliang and Wang, Zhongqi and Yang, Yuping},
+  journal={IEEE Geoscience and Remote Sensing Letters}, 
+  title={CFRNet: Road Extraction in Remote Sensing Images Based on Cascade Fusion Network}, 
+  year={2024},
+  volume={21},
+  number={},
+  pages={1-5},
+  keywords={Feature extraction;Roads;Remote sensing;Data mining;Convolution;Fuses;Semantics;Cascad fusion network;multiscale;road extraction;sub-backbone;triple-level adaptive feature fusion (TAFF) module},
+  doi={10.1109/LGRS.2024.3409758}
+  }
