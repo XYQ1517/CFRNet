@@ -12,4 +12,7 @@ In the fused feature map, we can clearly see the overall contour of the road.
 
 ![image](https://github.com/XYQ1517/CFRNet/assets/104625070/2c3a905a-3f2d-40c4-878c-6a9a1befdc74)
 
+## Weight
 
+The weight can be found here: https://pan.baidu.com/s/1G6L-JZhjMRHM0ftaWgrJXQ?pwd=ptmn
+Note that when testing the CFRNet weight on the DeepGlobe, you need to change all the "TAFF" in CFRNet.py to "MSAF".
